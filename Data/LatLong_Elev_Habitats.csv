@@ -1,0 +1,116 @@
+S.No.,Locality,Date,Habitat,Elevation,Latitude,Longitude,FID
+1,Char,17.07.2023,Stony steppe,3953,33.24614,77.134484,494
+2,Anmo,17.07.2023,Hay Meadow,3793,33.246901,77.072586,510
+3,"Gurda (Above Kachey, Kargil)",15.06.2023,Mesic meadow,3473,34.396902,76.260895,486
+4,Mushko valley,22.05.2023,Herbaceous meadow,3148,34.435457,75.683054,489
+5,Somat (Drass),04.06.2023,Scrub steppe,2903,34.438503,75.911685,492
+6,Above Padum (Zanskar),20.07.2023,Desert steppe (screes and gravelly/alluvial gravel),3819,33.528398,76.851476,495
+7,Remala Kaisam (Zanskar),23.07.2023,Herbaceous (stabilized gravelly),3676,33.63743,76.666772,496
+8,Gonbo Rangjon,18.07.2023,Herbaceous meadow (stabilized slope),4448,32.982529,77.254786,503
+9,Phugtal monastery,18.07.2023,Stony river bed,3825,33.25782,77.170785,508
+10,"Rulagung, Kilima bridge (Zanskar)",16.07.2023,Scrub steppe,3423,33.77064,76.846356,511
+11,"Zanskar valley rd., ahead of Lingshed",16.07.2023,Scrub steppe,3272,33.826115,76.874524,512
+12,Ahead of Bardan Monastery,17.07.2023,Desert steppe (Gravelly slope),3673,33.381497,76.930029,515
+13,Between Rulagang and Honia (Zanskar valley East),16.07.2023,Deset steppe (stabe slope_hard rocky substrate_Stabilized stony steppe),3504,33.734063,76.864421,516
+14,Padum (outskirts),20.07.2023,Desert steppe (sandy loam soil),3904,33.528788,76.855976,520
+15,North of Akshu,23.07.2023,Sandy alluvial plane/mountain base,3804,33.724702,76.486657,523
+16,Gonbo Rangjon Base,19.07.2023,Herbaceous meadow,4433,32.968841,77.256195,524
+17,Gonbo Rangjon valley,19.07.2023,Herbaceous meadow with shrubs,4307,32.983128,77.247671,527
+18,"Opp. Rinam, ahead of Chillingkik, Zanskar",16.07.2023,open stony habitat/stony steppe,3487,33.546215,76.997619,528
+19,"Penzi La, before Drang Drung (Zanskar)",24.07.2023,Herbaceous meadow/Dry river bed,4393,33.854982,76.358729,529
+20,Kurgiakh Chu Rd. (Zanskar),19.07.2023,Scrub steppe,4213,33.014986,77.243654,535
+21,Padum (Zanskar),21.07.2023,Riverine scrub,3502,33.497256,76.869888,547
+22,"Karshah valley, Padum outskirts (Zanskar)",21.07.2023,Scrub steppe/ stony steppe,3795,33.512043,76.993911,550
+23,"Ahead of Karsha, Zanskar",22.07.2023,Desert steppe,3707,33.539582,76.937039,555
+24,Chila (ahead of Padum),22.07.2023,Moist scrub,3764,33.41426,76.890347,556
+25,Lungmi Reging,21.07.2023,Desesrt steppe,3775,33.492418,76.956226,559
+26,Lungmi Reging,21.07.2023,Herbaceous/Hay meadow,3851,33.491452,76.95797,561
+27,Ahead of Padum,22.07.2023,Dry Alpine scrub,3739,33.415096,76.892112,571
+28,,22.07.2023,Scrub steppe,3706,33.523128,76.774031,576
+29,Penzi La,24.07.2023,Herbaceous (Proglacial zone),4437,33.863463,76.356825,585
+30,Abran,23.07.2023,Hay meadow,3720,33.696374,76.573542,587
+31,Before Rangdum,24.07.2023,Herbaceous (Gentle stable slope) ,4218,33.91014,76.327344,598
+32,Rangdum,25.07.2023,,4009,34.042374,76.388517,611
+33,Rangdum,25.07.2023,Stony river bed,3994,34.039893,76.383619,619
+34,Rangdum,25.07.2023,Marsh meadow,3959,34.047653,76.341028,621
+35,,18.07.2023,Desert steppe,3943,33.203015,77.156974,634
+36,,26.07.2023,,3952,34.047049,76.314388,642
+37,,18.07.2023,Scrub steppe,3986,33.132344,77.214691,643
+38,,26.07.2023,(Desert) Steppe,3994,34.051828,76.365256,648
+39,,26.07.2023,Scrub steppe,3907,34.072087,76.155802,649
+40,Shakar,17.08.2024,Rocky outcrop,2879,34.5679,76.51318333,670
+41,Purtikchey,18.08.2024,Hay meadow,3183,34.20501667,75.92963333,671
+42,Before Tongul,18.08.2024,Herbaceous,3408,34.0619,75.92543333,672
+43,Before Gulmatungo,18.08.2024,Moraine herbaceous or (Desert steppe)?,3930,34.08281667,76.11298333,673
+44,Gulmatungo,18.08.2024,Marsh meadow,3925,34.07058333,76.16385,674
+45,Before Rangdum,18.08.2024,Herbaceous,3995,34.04486667,76.2371,675
+46,Ahead of Rangdum,19.08.2024,Herbaceous,4118,33.98968333,76.3726,676
+47,Before Akshu,19.08.2024,Desert steppe (Stablized slope),4074,33.80275,76.44393333,677
+48,Before Akshu,20.08.2024,Desert steppe,4023,33.77005,76.46368333,678
+49,Before Rangdum,20.08.2024,Marsh meadow,4052,33.9896,76.36566667,679
+50,Rangdum,20.08.2024,Riverine Scrub,4027,34.00898333,76.37556667,680
+51,Kaksar,24.08.2024,Desert Steppe,2962,34.58186667,75.98935,681
+52,Wakha Mulbekh,25.08.2024,Scrub steppe/Barren river bed,3399,34.363136,76.33411,682
+53,Sapi,25.08.2024,Scrub steppe,4377,34.37373333,76.19493333,683
+54,After Sapi La,25.08.2024,Desert Steppe,4378,34.37636667,76.1984,684
+55,Barso,27.08.2024,Desert steppe,3311,34.21771667,76.13915,685
+56,Sankoo,15.08.24,Hay Meadow,3089,34.27141667,75.99738333,686
+57,Opp. Wakha,16.08.2024,Desert steppe,3570,34.3805,76.42376667,687
+58,Fokar,16.08.2024,Moist meadow (very small patch),3904,34.38173333,76.2137,688
+59,Shargole Cave monastery,16.08.2024,Scrub steppe (Gravelly gentle slope),3257,34.3931,76.29833333,689
+60,Aryan valley,17.08.2024,Scrub steppe,3421,34.57695,76.20921667,690
+61,Aryan valley,17.08.2024,Scrub steppe,3679,34.58136667,76.23571667,691
+62,Opp. Lalung,17.08.2024,Desert steppe,3831,34.58945,76.29203333,692
+63,Sapi Lake,16.09.2020,Stony river bed,4419,34.35251,76.074268,15
+64,Guindial,21.09.2020,Desert Steppe,3131,34.412842,75.882268,21
+65,Drass,21.09.2020,Moist meadow (Spring area),3088,34.41052,75.658975,23
+66,Kargil Sapi,02.10.2020,Desert steppe/Moraine,3461,34.358783,76.238653,28
+67,"Khachey, Kargil",2.10.2020,Scattered woodland,3815,34.35133,76.223623,29
+68,"Fokar, Kargil",8.10.2020,Riverine scrub,3317,34.386195,76.256623,32
+69,"Fokar, Kargil",9.10.2020,Wooland,3519,34.379555,76.245077,36
+70,"Shargole, Kargil",18.10.2020,Riverine scrub,3143,34.396217,76.306841,38
+71,Dzongkul Gompa Zanskar,24.08.2021,Desert steppe (Stony),3794.774096,33.574262,76.685557,121
+72,Dzongkul Gompa Zanskar,24.08.2021,Scrub Steppe,3815,33.572773,76.679963,126
+73,Zanskar,24.08.2021,Desert steppe,3865,33.462565,76.848341,127
+74,Ahead of Sankoo (Suru Valley),08.09.2021,Desert  steppe (Scree slope),3005,34.257557,75.970828,129
+75,"Kaksar, Kargil",09.09.2021,Scrub steppe,2812,34.569636,75.986941,133
+76,Hanuthang,29.09.2021,Desert steppe (Disturbed habitat),2818,34.547648,76.611643,138
+77,Zanskar (entrance via Wanla),25.08.2021,Scree slopes (Scrub steppe),3510,33.715104,76.891038,143
+78,Hambuting La,10.09.2021,Desert steppe (Colluvial stony slope),4035,34.5856054,76.2751171,146
+79,NamkiLa,10.09.2021,Desert steppe,3653,34.37549,76.4754,147
+80,"Zanskar, Kargil",25.08.2021,Desert steppe (stabilized slope),3568,33.508176,76.951262,153
+81,"Choskore, Kargil",11.09.2021,Desert steppe (sandy slope with stones/loose scree),3592,34.475984,76.131124,234
+82,"Airport, Kargil",11.09.2021,Desert steppe (Braided stream),2976,34.507891,76.153413,272
+83,"Achambur (Panikjar), Kargil",08.09.2021,Scrub steppe (broken rocky slope),3289,34.096182,75.94037,279
+84,"SapiLa, Kargil",10.06.2022,Subnival steppe/Clayey soil,4436,34.3756,76.1959,300
+85,"Chulichan, Kargil",08.08.2022,Scrub steppe/coarse gravelly soil,2816,34.6616,76.3108,301
+86,"Batalik, Kargil",8.08.2022,Dry Hay Meadow,3668,34.5969,76.2941,311
+87,"near PenziLa, Zanskar",22.09.2022,Moist scrub,4206,33.8528,76.3804,314
+88,"Karpo Khar, Suru",20.07.2022,Stony steppe/ Stabilized slope,3181,34.2148,75.9606,333
+89,"Drass, Kargil",1.08.2022,Scrub steppe,2674,34.592763,76.00672,335
+90,Sapi,19.06.2022,Subnival fellfield/Scree,4700,34.394269,76.189016,316
+91,"Gumri, Kargil",13.08.2022,Herbaceous meadow (grazing site),3484,34.297586,75.481069,481
+92,"Minimarg, Kargil",12.08.2022,Herbaceous meadow,3362,34.3293,75.5783,476
+93,"Pandras, Drass",02.08.2022,Scrub steppe/Betula patch,3319,34.4044,75.6403,370
+94,"Mushko, Drass",10.08.2022,Scrub steppe,3175,34.4343,75.6932,344
+95,"Saleskot, Suru Valley",19.07.2022,Hay meadow,3003,34.3687,75.9831,380
+96,"Suru, Kargil",16.07.2022,Stable scree,3450,34.4164,75.9813,461
+97,"Above University Campus, Suru",16.07.2022,Scree steppe,2879,34.4168,75.9832,462
+98,Sapi,24.06.2022,Desert steppe/Dry stabilized alpine slope,3836,34.3642,76.1062,448
+99,"Kaksar, Drass",1.08.2022,Scrub steppe,2887,34.5623,75.9878,336
+100,Suru,25.07.2022,Hay Meadow,3276,34.1088,75.9463,410
+101,"Purtikche, Suru",26.07.2022,Stony steppe/stabilized slope,3218,34.1803,75.9278,420
+102,"Umba, Suru",6.08.2022,Stable scree/Steppe with some shrubs,3579,34.3295,75.8828,350
+103,"Umba, Suru",6.08.2022,Stable scree/Steppe with some shrubs,3437,34.3289,75.8804,356
+104,Umba,6.08.2022,Moist meadow/Spring,3523,34.328164,75.880991,343
+105,"Drass, Somat",27.07.2022,Riverine scrub/Sandy riverbed,2890,34.4395,75.9126,341
+106,"Kartse khar, Sankoo",18.07.2022,Dry Desert steppe,3076,34.2672,75.9899,431
+107,"Kartse khar, Sankoo",18.07.2022,Dry Desert steppe,3070,34.2682,75.9911,433
+108,"Sapi, Kargil",11.08.2022,Scrub steppe,3800,34.3589,76.1396,450
+109,"Sapi, Kargil",11.08.2022,Desert steppe,4192,34.3785,76.1867,458
+110,"Sapi, Kargil",30.07.2022,Mesic/moist meadow,3868,34.3823,76.2185,391
+111,"Sapi, Kargil",30.07.2022,Scree/ Desert steppe,3886,34.3816,76.2184,386
+112,"Sapi, Kargil",30.07.2022,Scree/ Desert steppe,4140,34.3842,76.2062,395
+113,"Mulbekh, Kargil",7.08.2022,Scree/ Desert steppe,3711,34.4023,76.3884,397
+114,"Before PensiLa, Zanskar",22.09.2022,Steppe/Moraine,3860,33.7267,76.4975,351
+115,"Fokar phoo, Kargil",24.06.2022,Snowfield,4448,34.358534,76.078732,446
