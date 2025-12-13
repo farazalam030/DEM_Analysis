@@ -6,6 +6,12 @@ packages <- c("terra","sf","dplyr","vegan","betapart",
 installed <- rownames(installed.packages())
 for (p in packages) if (!(p %in% installed)) install.packages(p)
 lapply(packages, library, character.only = TRUE)
+install.packages("remotes")
+remotes::install_version(
+  "insol",
+  version = "1.2.1",
+  repos = "https://cran.r-project.org"
+)
 
 ##############################################################
 ### 2. IMPORT SPECIES × SITE MATRIX AND COORDINATES
@@ -16,6 +22,8 @@ coords <- read.csv("Data/plot_coordinates.csv")  # Must have Plot_ID, Latitude, 
 ##############################################################
 ### 3. CREATE SPATIAL OBJECTS & REPROJECT TO UTM
 ##############################################################
+library(sf)
+
 plots_sf <- st_as_sf(coords, coords = c("Longitude", "Latitude"), crs = 4326)
 utm_zone <- floor((mean(coords$Longitude) + 180)/6) + 1
 utm_crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84 +units=m +no_defs")
@@ -24,37 +32,48 @@ plots_sf <- st_transform(plots_sf, crs = utm_crs)
 ##############################################################
 ### 4. LOAD DEM AND DERIVE MICROTOPOGRAPHIC VARIABLES
 ##############################################################
+library(terra)
+
 dem <- rast("DEM/ALOS_PALSAR_12p5m_DEM.tif")
 dem <- project(dem, utm_crs)
 
 # Primary terrain metrics
-slope <- terrain(dem, opt = "slope", unit = "degrees")
-aspect <- terrain(dem, opt = "aspect", unit = "degrees")
+slope <- terra::terrain(dem, v = "slope", unit = "degrees")
+aspect  <- terra::terrain(dem, v = "aspect", unit = "degrees")
 
 # Secondary terrain metrics
-profile_curv <- terrain(dem, opt = "profile")
-plan_curv <- terrain(dem, opt = "plan")
-tpi <- terrain(dem, opt = "TPI")
-tri <- terrain(dem, opt = "TRI")
-roughness <- terrain(dem, opt = "roughness")
+#terra::terrain
+#profile_curv <- terra::terrain(dem, v = "profilecurvature")
+#plan_curv    <- terra::terrain(dem, v = "plancurvature")
+#tpi          <- terra::terrain(dem, v = "tpi")
+#tri          <- terra::terrain(dem, v = "tri")
+
+roughness    <- terra::terrain(dem, v = "roughness")
+library(spatialEco)
+
+tpi <- spatialEco::tpi(dem)
+tri <- spatialEco::tri(dem)
 
 # Hydrological metric
-flowdir <- terrain(dem, opt = "flowdir")
+flowdir <- terra::terrain(dem, v = "flowdir")
 flowacc <- terra::flowAccumulation(flowdir)
-twi <- log((flowacc + 1) / tan(slope * pi/180))
+flowacc_log <- log1p(flowacc)
+slope_rad <- slope * pi / 180.0
+twi <- log((flowacc + 1) / tan(slope_rad))
+names(twi) <- "twi"
 
 # Ruggedness
-vrm <- spatialEco::vrm(raster::raster(dem), s = 3)
+vrm <- spatialEco::vrm(dem, s = 3)
 vrm <- rast(vrm); names(vrm) <- "vrm"
 
 ##############################################################
 ### 5. MONTHLY SOLAR RADIATION (JUNE–SEPT)
 ##############################################################
-slope_rad <- radians(values(slope))
-aspect_rad <- radians(values(aspect))
+#slope_rad <- radians(values(slope))
+aspect_rad <- values(aspect)*pi/180.0
 lat <- mean(coords$Latitude)
-lat_rad <- radians(lat)
-
+lat_rad <- lat* pi/180.0
+library(insol)
 get_solar_month <- function(DOY){
   sol <- insolation(slope = slope_rad, aspect = aspect_rad, lat = lat_rad,
                     J = DOY, local = TRUE, hourly = FALSE)
@@ -72,17 +91,22 @@ names(solar_stack) <- c("solar_June","solar_July","solar_August","solar_Septembe
 ##############################################################
 ### 6. STACK VARIABLES
 ##############################################################
-micro_stack <- c(dem, slope, aspect, tpi, tri, roughness, twi, vrm, solar_stack)
+#micro_stack <- c(dem, slope, aspect, tpi, tri, roughness, twi, vrm, solar_stack)
+#names(micro_stack)[1:8] <- c("elevation","slope","aspect","tpi","tri",
+#                             "roughness","twi","vrm")
+
+micro_stack <- c(dem, slope, aspect, tpi, tri, roughness, twi, vrm)
+
 names(micro_stack)[1:8] <- c("elevation","slope","aspect","tpi","tri",
                              "roughness","twi","vrm")
-
 ##############################################################
 ### 7. 1-HA BUFFERS AND EXTRACTION (MEAN, SD, CV)
 ##############################################################
 plots_buffer <- st_buffer(plots_sf, dist = 56.4)
 
 # Function to compute mean, SD, CV
-extract_mean_sd_cv <- function(rast_layer, buffers, var_name) {
+extract_mean_sd_cv <- function(rast_layer, buffers, var_name) 
+  {
   df_mean <- terra::extract(rast_layer, buffers, fun = mean, na.rm = TRUE)
   df_sd   <- terra::extract(rast_layer, buffers, fun = sd, na.rm = TRUE)
   df <- data.frame(
@@ -109,13 +133,14 @@ topo_het <- Reduce(function(x, y) merge(x, y, by = "Plot_ID"), var_list)
 ##############################################################
 ### 8. ALPHA & BETA DIVERSITY
 ##############################################################
+library(vegan)
 alpha_div <- data.frame(
   Plot_ID = rownames(species_data),
   Richness = rowSums(species_data > 0),
   Shannon  = diversity(species_data, index = "shannon"),
   Simpson  = diversity(species_data, index = "simpson")
 )
-
+library(betapart)
 beta_parts <- beta.pair(species_data, index.family = "sorensen")
 beta_summary <- data.frame(
   Total_Beta_Sorensen = mean(beta_parts$beta.sor),
@@ -140,6 +165,7 @@ div_micro <- div_micro[, !names(div_micro) %in% names(vif_vals[vif_vals > 5])]
 ##############################################################
 ### 10. FIT GAM MODEL (MEAN + SD VARIABLES)
 ##############################################################
+library(mgcv)
 gam_shannon <- gam(Shannon ~ 
                      s(slope_mean, k=5) + s(slope_sd, k=5) +
                      s(twi_mean, k=5)  + s(twi_sd, k=5) +
