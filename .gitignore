@@ -1,3 +1,6 @@
 *.Rproj.*
 *Rproj*
 DEM/*
+.Rproj.user
+*.RData
+*.Rhistory
