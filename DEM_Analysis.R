@@ -16,7 +16,7 @@ remotes::install_version(
 ##############################################################
 ### 2. IMPORT SPECIES × SITE MATRIX AND COORDINATES
 ##############################################################
-species_data <- read.csv("Data/species_site_matrix.csv", row.names = 1)
+species_data <- read.csv("Data/species_site_matrix_dup.csv", row.names = 1)
 coords <- read.csv("Data/plot_coordinates.csv")  # Must have Plot_ID, Latitude, Longitude
 
 ##############################################################
@@ -70,23 +70,23 @@ vrm <- rast(vrm); names(vrm) <- "vrm"
 ### 5. MONTHLY SOLAR RADIATION (JUNE–SEPT)
 ##############################################################
 #slope_rad <- radians(values(slope))
-aspect_rad <- values(aspect)*pi/180.0
-lat <- mean(coords$Latitude)
-lat_rad <- lat* pi/180.0
-library(insol)
-get_solar_month <- function(DOY){
-  sol <- insolation(slope = slope_rad, aspect = aspect_rad, lat = lat_rad,
-                    J = DOY, local = TRUE, hourly = FALSE)
-  r <- rast(dem); values(r) <- sol; return(r)
-}
-days <- c(June=172, July=203, August=234, September=265)
-solar_june <- get_solar_month(days["June"])
-solar_july <- get_solar_month(days["July"])
-solar_aug  <- get_solar_month(days["August"])
-solar_sep  <- get_solar_month(days["September"])
-
-solar_stack <- c(solar_june, solar_july, solar_aug, solar_sep)
-names(solar_stack) <- c("solar_June","solar_July","solar_August","solar_September")
+# aspect_rad <- values(aspect)*pi/180.0
+# lat <- mean(coords$Latitude)
+# lat_rad <- lat* pi/180.0
+# library(insol)
+# get_solar_month <- function(DOY){
+#   sol <- insolation(slope = slope_rad, aspect = aspect_rad, lat = lat_rad,
+#                     J = DOY, local = TRUE, hourly = FALSE)
+#   r <- rast(dem); values(r) <- sol; return(r)
+# }
+# days <- c(June=172, July=203, August=234, September=265)
+# solar_june <- get_solar_month(days["June"])
+# solar_july <- get_solar_month(days["July"])
+# solar_aug  <- get_solar_month(days["August"])
+# solar_sep  <- get_solar_month(days["September"])
+# 
+# solar_stack <- c(solar_june, solar_july, solar_aug, solar_sep)
+# names(solar_stack) <- c("solar_June","solar_July","solar_August","solar_September")
 
 ##############################################################
 ### 6. STACK VARIABLES
@@ -99,6 +99,7 @@ micro_stack <- c(dem, slope, aspect, tpi, tri, roughness, twi, vrm)
 
 names(micro_stack)[1:8] <- c("elevation","slope","aspect","tpi","tri",
                              "roughness","twi","vrm")
+#plot(micro_stack)
 ##############################################################
 ### 7. 1-HA BUFFERS AND EXTRACTION (MEAN, SD, CV)
 ##############################################################
@@ -119,14 +120,17 @@ extract_mean_sd_cv <- function(rast_layer, buffers, var_name)
   return(df)
 }
 
+
 # Variables benefiting most from SD/CV
 var_list <- list(
+  extract_mean_sd_cv(dem, plots_buffer, "elevation"),
   extract_mean_sd_cv(slope, plots_buffer, "slope"),
   extract_mean_sd_cv(twi, plots_buffer, "twi"),
   extract_mean_sd_cv(tri, plots_buffer, "tri"),
   extract_mean_sd_cv(tpi, plots_buffer, "tpi"),
   extract_mean_sd_cv(roughness, plots_buffer, "roughness")
 )
+
 
 topo_het <- Reduce(function(x, y) merge(x, y, by = "Plot_ID"), var_list)
 
@@ -141,7 +145,22 @@ alpha_div <- data.frame(
   Simpson  = diversity(species_data, index = "simpson")
 )
 library(betapart)
-beta_parts <- beta.pair(species_data, index.family = "sorensen")
+species_data2<- read.csv("Data/species_site_matrix_dup.csv", row.names = 1)
+
+elevation_mean_test=extract_mean_sd_cv(dem, plots_buffer, "elevation")
+elevation_mean_df <- terra::extract(dem, plots_buffer, fun = mean, na.rm = TRUE)
+
+slope_mean_test=extract_mean_sd_cv(slope, plots_buffer, "slope")
+aspect_mean_test=extract_mean_sd_cv(aspect, plots_buffer, "aspect")
+tpi_mean_test=extract_mean_sd_cv(tpi, plots_buffer, "tpi")
+tri_mean_test=extract_mean_sd_cv(tri, plots_buffer, "tri")
+roughness_mean_test=extract_mean_sd_cv(roughness, plots_buffer, "roughness")
+twi_mean_test=extract_mean_sd_cv(twi, plots_buffer, "twi")
+vrm_mean_test=extract_mean_sd_cv(vrm, plots_buffer, "vrm")          
+
+sum(is.na(species_data2))
+
+beta_parts <- beta.pair.abund(species_data2, index.family = "bray")
 beta_summary <- data.frame(
   Total_Beta_Sorensen = mean(beta_parts$beta.sor),
   Turnover_Beta_Sim = mean(beta_parts$beta.sim),
@@ -153,20 +172,22 @@ div_micro <- merge(alpha_div, topo_het, by = "Plot_ID")
 ##############################################################
 ### 9. CHECK MULTICOLLINEARITY
 ##############################################################
-vif_mod <- lm(Shannon ~ slope_mean + slope_sd + twi_mean + twi_sd +
+vif_mod <- lm(Shannon ~ elevation_mean + slope_mean + slope_sd + twi_mean + twi_sd +
               tri_mean + tri_sd + tpi_mean + tpi_sd + roughness_mean + roughness_sd,
               data = div_micro)
 vif_vals <- car::vif(vif_mod)
 print(vif_vals)
 
+
 # Optionally remove variables with VIF > 5
-div_micro <- div_micro[, !names(div_micro) %in% names(vif_vals[vif_vals > 5])]
+#div_micro <- div_micro[, !names(div_micro) %in% names(vif_vals[vif_vals > 5])]
 
 ##############################################################
 ### 10. FIT GAM MODEL (MEAN + SD VARIABLES)
 ##############################################################
 library(mgcv)
 gam_shannon <- gam(Shannon ~ 
+                     s(elevation_mean, k=5) +
                      s(slope_mean, k=5) + s(slope_sd, k=5) +
                      s(twi_mean, k=5)  + s(twi_sd, k=5) +
                      s(tri_mean, k=5)  + s(tri_sd, k=5) +
