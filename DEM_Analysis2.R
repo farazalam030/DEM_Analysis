@@ -44,17 +44,32 @@ rough  <- terrain(dem, v = "roughness")
 
 # tpi_25 <- tpi(dem_crop, scale = 25)
 
-tpi <- tpi(dem, scale = 10)   # ~300 m window (appropriate for Ladakh)
+# tpi <- tpi(dem, scale = 10)   # ~300 m window (appropriate for Ladakh)
 
 
 # Hydrological variables
-dem_filled <- fill(dem)
+wbt_fill_depressions(
+    dem = "dem.tif",
+    output = "dem_filled.tif"
+)
+
+dem_filled <- rast("dem_filled.tif")
+# dem_filled <- fill(dem)
 
 flow_acc <- flowAccumulation(dem_filled)
 twi <- terrain(dem_filled, v = "TWI")
 
 # Vector Ruggedness Measure (VRM)
 writeRaster(dem, "dem.tif", overwrite = TRUE)
+
+wbt_tpi(
+  dem = "dem.tif",
+  output = "tpi_300m.tif",
+  filterx = 51,
+  filtery = 51
+)
+
+tpi <- rast("tpi_300m.tif")
 
 wbt_vector_ruggedness_measure(
   dem = "dem.tif",
