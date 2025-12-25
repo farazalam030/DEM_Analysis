@@ -40,7 +40,19 @@ aspect <- terrain(dem, v = "aspect", unit = "degrees")
 tri    <- terrain(dem, v = "TRI")
 rough  <- terrain(dem, v = "roughness")
 #Topographic Position Index (TPI)
-tpi <- tpi(dem, scale = 25)   # ~300 m window (appropriate for Ladakh)
+# dissolve all square plots
+plots_union <- st_union(plots_buf)
+
+# convert to terra vector
+plots_vect <- vect(plots_union)
+
+# crop DEM
+dem_crop <- crop(dem, plots_vect)
+dem_crop <- mask(dem_crop, plots_vect)
+
+tpi_25 <- tpi(dem_crop, scale = 25)
+
+# tpi <- tpi(dem, scale = 25)   # ~300 m window (appropriate for Ladakh)
 
 
 # Hydrological variables
