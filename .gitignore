@@ -4,3 +4,5 @@ DEM/*
 .Rproj.user
 *.RData
 *.Rhistory
+clip/*
+clip
